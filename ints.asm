@@ -1,3 +1,11 @@
+        .data
+        .align 2
+        .space 12
+String: .space 16
+Input:  .asciiz "\nEnter an integer number between (0 and 10) = "
+        .text
+        .globl main
+
 main:
         li $2,4                         # System call code for print string
         la $4,Input                     # Argument string as Input
