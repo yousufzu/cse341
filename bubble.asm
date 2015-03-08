@@ -30,6 +30,7 @@ loop:
 	addi $s4, $s4, 1		# Move to next index in array
 	
 	bne $s4, $s0, loop		# Branch if $t2 != $s0
+
 	addi $s2, $s4, -1
 bloop:
 	beq $s2, $zero, Print
