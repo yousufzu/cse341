@@ -2,23 +2,18 @@
         .data
         .align	2
         .space	12
-list:	.space	1000			# Can hold 250 ints - just use it for now
-listsz:	.word 	250
+list:	.space	40			# Can hold 10 ints
+EmptyString: .asciiz " "
 String: .space	16
-Input:  .asciiz "\nEnter an integer "
+SolutionString: .asciiz "\nThe values after the bubble sort are: "
+Input:  .asciiz "\nEnter an integer: "
         .text
         .globl main
 
 main:
-        lw $s0, listsz			# Dimension
 	la $s1, list			# Address
 	li $s4, 0			# Number of items intialized
-	j loop
-	li $s7, 0
-	j Sort
-	j Print
-	j Exit
-
+	li $s0, 10
 loop:
 	li $v0, 4			# System call code for print string
 	la $a0, Input			# Argument string as Input
@@ -28,35 +23,24 @@ loop:
 	syscall				# Read it
 	move $t0, $v0			# Move to temp address
 	
-	slti $s2, $t0, 0		# If input is less than 0, $s2 is 1
-	bne $s2, 0, $ra			# Branch if $s2 != 0
 	
-	add $t1, $s1, $s4
+	sll $t2, $s4, 2
+	add $t1, $s1, $t2		# Address of item
 	sw $t0, 0($t1)			# Move into array
-	sll $s4, $s4, 2			# Move to next index in array
-
-	j loop
-
-Sort:
-	add $t1, $s4, 0
-	srl $s2, $t1, 2			# Number of items in array
-	move $s4 , $s2			# Constant array size
+	addi $s4, $s4, 1		# Move to next index in array
 	
-	j bloop
-	j $ra
-
+	bne $s4, $s0, loop		# Branch if $t2 != $s0
+	addi $s2, $s4, -1
 bloop:
-	beq $s2, 0, $ra
+	beq $s2, $zero, Print
 	li $s3, 0			# Initial array address
 	j iloop
-	addi $s2, $s2, -1
-	j bloop
-
 iloop:
-	beq $s2, $s3, $ra
 	addi $t3, $s3, 1
+
 	sll $t4, $s3, 2
 	sll $t5, $t3, 2
+
 	add $t4, $t4, $s1		# Address of first
 	add $t5, $t5, $s1		# Address of second
 
@@ -69,22 +53,44 @@ iloop:
 
 	bne $t6, 0, iloop		# If $t6 == 1, go through loop again
 	
-	sw $t8, 0($t4)
+	sw $t8, 0($t4)			# Swap Values
 	sw $t7, 0($t5)
-	j iloop
+
+	add $t0, $s2, -1
+	bne $s3, $t0, iloop		# If not at end, loop again
+
+	addi $s2, $s2, -1		# Decrement index
+	j bloop
 
 Print:
-	beq $s7, $s4, $ra
-	sll $t0, $s7, 2
-	add $t1, $t0, $s1		# Address space
-	lw $t2, 0($t1)			# Load integer
-	li $v0, 1
-	move $a0, $t2
+	li $2,4
+	la $4,SolutionString
+	syscall			
+
+	la $t0, list
+	add $t1,$zero,$zero
+
+
+printValues:
+
+	lw $4,0($s1)
+	li $2,1
 	syscall
 
-	addi $s7, $s7, 1
-	j Print
-	
+
+	li $2,4
+	la $4,EmptyString
+	syscall
+
+
+	addi $s1,$s1,4
+	addi $t1,$t1,1
+	slt $t2,$s0,$t1
+	beq $t2,$zero,printValues
+
+	j Exit
+
+
 Exit:
         li $2,10                        # System call code for exit
         syscall                         # exit
