@@ -33,6 +33,7 @@ loop:
 
 	addi $s2, $s4, -1
 bloop:
+	j Print
 	beq $s2, $zero, Print
 	li $s3, 0			# Initial array address
 	j iloop
@@ -67,7 +68,7 @@ Print:
 	li $2,4
 	la $4,SolutionString
 	syscall			
-
+	addi $s0, $s0, -1
 	la $t0, list
 	add $t1,$zero,$zero
 
