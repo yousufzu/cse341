@@ -33,14 +33,13 @@ loop:
 
 	addi $s2, $s4, -1
 bloop:
-	j Print
 	beq $s2, $zero, Print
 	li $s3, 0			# Initial array address
-	j iloop
 iloop:
+	
 	addi $t3, $s3, 1
 
-	sll $t4, $s3, 2
+	sll $t4, $s3, 2			# Offset for both n and n+1
 	sll $t5, $t3, 2
 
 	add $t4, $t4, $s1		# Address of first
@@ -51,15 +50,14 @@ iloop:
 
 	slt $t6, $t7, $t8		# $t6 is 1 if A[n] < A[n+1]
 	addi $s3, $s3, 1		# Increment first
-	addi $t3, $t3, 1		# Increment second
 
-	bne $t6, 0, iloop		# If $t6 == 1, go through loop again
+	bne $t6, $zero, pswap		# If $t6 == 1, go through loop again
 	
 	sw $t8, 0($t4)			# Swap Values
 	sw $t7, 0($t5)
-
+pswap:
 	add $t0, $s2, -1
-	bne $s3, $t0, iloop		# If not at end, loop again
+	bne $s3, $s2, iloop		# If not at end, loop again
 
 	addi $s2, $s2, -1		# Decrement index
 	j bloop
