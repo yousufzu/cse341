@@ -2,23 +2,26 @@
 
 module Problem_3(output reg greater, less, equal, input [3:0] A, B);
 
-if(A > B){
+always@(A or B) begin
+
+if(A > B) begin
 	greater = 1'b1;
 	less = 1'b0;
 	equal = 1'b0;
-}
+end
 
-else if(A < B){
+else if(A < B) begin
 	greater = 1'b0;
 	less = 1'b1;
 	equal = 1'b0;
-}
+end
 
-else if(A == B){
+else if(A == B) begin
 	greater = 1'b0;
 	less = 1'b0;
 	equal = 1'b1;
-}
+end
+end
 
 endmodule
 
