@@ -39,5 +39,6 @@ initial begin
 	$monitor("A = %b, B = %b, Greater = %b, Less = %b, Equal = %b", t_A, t_B, t_greater, t_less, t_equal);
 	t_A = 4'b0001;
 	t_B = 4'b0001;
+	//More test cases were used, please see table
 end
 endmodule
