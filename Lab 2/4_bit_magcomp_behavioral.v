@@ -1,6 +1,6 @@
 //solution to Problem 3
 
-module Problem_3(output reg greater, less, equal, input [3:0] A, [3:0] B);
+module Problem_3(output reg greater, less, equal, input [3:0] A, B);
 
 if(A > B){
 	greater = 1'b1;
