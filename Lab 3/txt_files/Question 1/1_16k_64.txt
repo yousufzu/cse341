@@ -1,0 +1,46 @@
+pollux {~/d4-7} > dineroIV -l1-ubsize 32 -l1-usize 16k -l1-uassoc 1 -l1-uwback a -informat P < testing/mm.64
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-usize 16384
+-l1-ubsize 32
+-l1-usbsize 32
+-l1-uassoc 1
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat P
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-ucache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               266310          189397           76913           70449            6456               8
+  Fraction of total           1.0000          0.7112          0.2888          0.2645          0.0242          0.0000
+
+ Demand Misses                 33282             350           32932           30265            2664               3
+  Demand miss rate            0.1250          0.0018          0.4282          0.4296          0.4126          0.3750
+
+ Multi-block refs                 0
+ Bytes From Memory           1065024
+ ( / Demand Fetches)          3.9992
+ Bytes To Memory              126304
+ ( / Demand Writes)          19.5638
+ Total Bytes r/w Mem         1191328
+ ( / Demand Fetches)          4.4735
+
+---Execution complete.
